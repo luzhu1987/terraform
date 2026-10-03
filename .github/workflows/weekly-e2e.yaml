@@ -11,7 +11,7 @@ permissions:
 jobs:
   full-e2e-check:
     runs-on: ubuntu-latest
-    timeout-minutes: 1440
+    timeout-minutes: 1441
     environment:
       name: crontests
     steps:
