@@ -11,6 +11,11 @@ on:
         options:
           - plan
           - apply
+      import_existing_api_policy:
+        description: "Apply 时将已存在但尚未纳入 state 的 API policy 导入"
+        required: true
+        default: false
+        type: boolean
 
 permissions:
   contents: read
@@ -78,6 +83,22 @@ jobs:
 
       - name: Terraform validate
         run: terraform validate
+
+      - name: Import existing API policy
+        if: ${{ inputs.operation == 'apply' && inputs.import_existing_api_policy }}
+        run: |
+          if terraform state list | grep -Fxq azurerm_api_management_api_policy.policy; then
+            echo "API policy is already managed by Terraform."
+            exit 0
+          fi
+
+          api_id="$(terraform show -json | jq -er '
+            .values.root_module.resources[]
+            | select(.address == "azurerm_api_management_api.api")
+            | .values.id
+            | sub(";rev=[^;]+$"; "")
+          ')"
+          terraform import azurerm_api_management_api_policy.policy "$api_id"
 
       - name: Terraform plan
         run: terraform plan -out=tfplan
