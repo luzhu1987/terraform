@@ -9,6 +9,7 @@ This template deploys an Azure API Management service, containing an API (based 
 - [random_string](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string)
 - [azurerm_api_management](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/api_management)
 - [azurerm_api_management_api](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/api_management_api)
+- [azurerm_api_management_api_policy](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/api_management_api_policy)
 - [azurerm_api_management_product](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/api_management_product)
 - [azurerm_api_management_group](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/api_management_group)
 - [azurerm_api_management_product_api](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/api_management_product_api)
