@@ -146,6 +146,8 @@ issuer、subject、audience 必须精确匹配，环境名为 `azure-demo`。此
 2. 打开 **Actions → Deploy APIM example → Run workflow**，选择可信的 `master` 和 `operation=plan`，审批后查看 Terraform 日志中的资源变更。plan 不应用资源变更，但会访问 Azure/远程 state，AzureRM 自动注册资源提供程序也可能修改订阅注册状态。
 3. 确认费用、权限和计划后，再次手动运行，选择 `operation=apply`。
 
+如果已有部署的 API policy 已存在于 Azure、但不在远程 Terraform state 中，apply 失败时会提示该资源需要导入。再次运行 workflow，选择 `operation=apply` 并启用 `import_existing_api_policy`；workflow 会先从已管理的 API 资源读取 ID 并导入该 policy，再生成本次 plan。此选项会修改远程 state，只用于确认已存在该 API policy 的部署；新部署保持关闭。
+
 **apply 会在本次运行重新执行 init、validate、plan，再执行 `terraform apply tfplan`；不是应用上一次 plan 运行的产物。** 两次运行之间代码、provider 解析结果、API URL 内容或 Azure 资源都可能变化，请审查本次日志；需要精确的计划后审批时，应另行设计受保护的审批流程。
 
 workflow 不上传 plan/state 等敏感产物；它们只在该 runner 工作目录中使用，远程 state 留在 Blob。plan 日志本身也可能包含资源信息，请限制 Actions 日志访问。固定 concurrency `deploy-apim-example`（不取消正在运行的任务）加上 Azure Blob state 锁用于避免并行修改；仍不要在外部同时操作同一 state，也不要随意 force-unlock。
