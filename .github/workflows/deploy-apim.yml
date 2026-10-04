@@ -54,6 +54,13 @@ jobs:
 
       - name: Check configuration and enable remote backend
         run: |
+          for name in TF_STATE_STORAGE_ACCOUNT TF_STATE_CONTAINER; do
+            value="${!name}"
+            value="${value//$'\r'/}"
+            value="${value//$'\n'/}"
+            printf -v "$name" '%s' "$value"
+            printf '%s=%s\n' "$name" "$value" >> "$GITHUB_ENV"
+          done
           for name in ARM_CLIENT_ID ARM_TENANT_ID ARM_SUBSCRIPTION_ID TF_STATE_STORAGE_ACCOUNT TF_STATE_CONTAINER ACTIONS_ID_TOKEN_REQUEST_URL ACTIONS_ID_TOKEN_REQUEST_TOKEN; do
             if [[ -z "${!name}" ]]; then
               echo "::error::Missing configuration: ${name}"
