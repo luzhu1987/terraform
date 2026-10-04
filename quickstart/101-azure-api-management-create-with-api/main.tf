@@ -71,7 +71,7 @@ resource "azurerm_api_management_product" "product" {
   resource_group_name   = azurerm_resource_group.rg.name
   api_management_name   = azurerm_api_management.apim_service.name
   display_name          = "${random_string.product_name.result}-product"
-  subscription_required = true
+  subscription_required = false
   approval_required     = false
   published             = true
   description           = "An example Product"
