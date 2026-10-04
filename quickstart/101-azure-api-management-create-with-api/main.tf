@@ -25,16 +25,6 @@ resource "azurerm_api_management" "apim_service" {
   tags = {
     Environment = "Example"
   }
-  policy {
-    xml_content = <<XML
-    <policies>
-      <inbound />
-      <backend />
-      <outbound />
-      <on-error />
-    </policies>
-XML
-  }
 }
 
 resource "random_string" "api_name" {
