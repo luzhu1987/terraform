@@ -23,6 +23,13 @@
         <issuer>https://sts.windows.net/14f741bf-3a76-40f2-ac98-e1e4b135a635/</issuer>
       </issuers>
     </validate-jwt>
+    <return-response>
+      <set-status code="200" reason="OK" />
+      <set-header name="Content-Type" exists-action="override">
+        <value>application/json</value>
+      </set-header>
+      <set-body>{"message": "hello world"}</set-body>
+    </return-response>
   </inbound>
   <backend>
     <base />
