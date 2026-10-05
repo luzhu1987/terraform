@@ -1,17 +1,29 @@
 <policies>
   <inbound>
     <base />
-    <validate-jwt header-name="Authorization" failed-validation-httpcode="401" failed-validation-error-message="Unauthorized. Access token is missing or invalid." require-expiration-time="true" require-scheme="Bearer" require-signed-tokens="true">
+    <validate-jwt
+      header-name="Authorization"
+      failed-validation-httpcode="401"
+      failed-validation-error-message="Unauthorized. Access token is missing or invalid."
+      require-expiration-time="true"
+      require-scheme="Bearer"
+      require-signed-tokens="true">
       <openid-config url="https://login.microsoftonline.com/a346099f-656d-4020-85b1-3dab26bdf2d3/v2.0/.well-known/openid-configuration" />
+      <openid-config url="https://login.microsoftonline.com/14f741bf-3a76-40f2-ac98-e1e4b135a635/v2.0/.well-known/openid-configuration" />
       <issuers>
-        <issuer>https://sts.windows.net/a346099f-656d-4020-85b1-3dab26bdf2d3/v2.0/</issuer>
-        <issuer>https://sts.windows.net/14f741bf-3a76-40f2-ac98-e1e4b135a635/v2.0/</issuer>
+        <issuer>https://login.microsoftonline.com/a346099f-656d-4020-85b1-3dab26bdf2d3/v2.0</issuer>
+        <issuer>https://login.microsoftonline.com/14f741bf-3a76-40f2-ac98-e1e4b135a635/v2.0</issuer>
       </issuers>
       <audiences>
         <audience>8ef3d25d-431a-4739-8bbd-ff83b70cf163</audience>
+        <audience>14f741bf-3a76-40f2-ac98-e1e4b135a635</audience>
       </audiences>
     </validate-jwt>
   </inbound>
-  <backend><base /></backend>
-  <outbound><base /></outbound>
+  <backend>
+    <base />
+  </backend>
+  <outbound>
+    <base />
+  </outbound>
 </policies>
