@@ -1,15 +1,17 @@
 <policies>
   <inbound>
     <base />
-    <validate-azure-ad-token 
-        tenant-id="a346099f-656d-4020-85b1-3dab26bdf2d3" 
-        header-name="Authorization" 
-        failed-validation-httpcode="401" 
-        failed-validation-error-message="Unauthorized. Access token is missing or invalid.">
-      <client-application-ids>
-        <application-id>8ef3d25d-431a-4739-8bbd-ff83b70cf163</application-id>
-      </client-application-ids>
-    </validate-azure-ad-token>
+    <validate-jwt header-name="Authorization" failed-validation-httpcode="401" failed-validation-error-message="Unauthorized. Access token is missing or invalid." require-expiration-time="true" require-scheme="Bearer" require-signed-tokens="true">
+      <openid-config url="https://login.microsoftonline.com/a346099f-656d-4020-85b1-3dab26bdf2d3/v2.0/.well-known/openid-configuration" />
+      <audiences>
+        <audience>8ef3d25d-431a-4739-8bbd-ff83b70cf163</audience>
+      </audiences>
+      <required-claims>
+        <claim name="azp" match="all">
+          <value>8ef3d25d-431a-4739-8bbd-ff83b70cf163</value>
+        </claim>
+      </required-claims>
+    </validate-jwt>
   </inbound>
   <backend><base /></backend>
   <outbound><base /></outbound>
